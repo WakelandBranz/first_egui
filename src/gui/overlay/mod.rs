@@ -1,2 +1,1 @@
-mod overlay;
-mod draw;
+pub(crate) mod draw;

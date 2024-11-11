@@ -3,6 +3,7 @@ name = "first_egui"
 version = "0.1.0"
 edition = "2021"
 
+# TODO! This is a mess. I'll clean it up later.
 [dependencies]
 eframe = { version = "0.29.1", features = [
     "default",
@@ -17,7 +18,7 @@ log = "0.4.22"
 winapi = { version = "0.3.9", features = ["winuser"] }
 rand = "0.8.1"
 
-toml = "0.8.19"
-serde = { version = "1.0.214", features = ["derive"] }  # Add this line
-linkme = "0.3.29"
-typetag = "0.2.18"
+serde = { version = "1.0.214", features = ["derive"] }
+serde_json = "1.0.132"
+anyhow = "1.0.93"
+glam = "0.29.2"
