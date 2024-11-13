@@ -82,7 +82,7 @@ impl TabSelector {
     fn render_tabs(&mut self, ui: &mut egui::Ui) {
         ui.horizontal_centered(|ui| {
             let style = ui.style_mut();
-            style.spacing.item_spacing.x = 0.0; // Remove spacing between items
+            style.spacing.item_spacing.x = 15.0;
 
             let available_width = ui.available_width();
             let tab_count = Tab::all().len() as f32;

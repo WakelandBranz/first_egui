@@ -5,16 +5,15 @@ use crate::features::*;
 
 // BoxEsp feature with UI integration
 #[derive(Default, Serialize, Deserialize, Clone)]
-pub struct BoxEsp {
+pub struct NameEsp {
     // I'd like to remove enabled in the future so that when all features are being iterated through
     // and rendered or updated I can save on an if statement, but that'll be for another time.
     // Just gotta get stuff working for now.
     pub enabled: bool,
     pub color: [f32; 4],
-    pub thickness: f32,
 }
 
-impl Feature for BoxEsp {
+impl Feature for NameEsp {
     fn update(&mut self, data: &GameData) -> anyhow::Result<()> {
         Ok(())
     }
@@ -28,11 +27,11 @@ impl Feature for BoxEsp {
 
             let screen_pos = game_data.view_controller.world_to_screen(&entity.pos, true)
                 .unwrap_or_else(|| {
-                    log::error!("Failed to unwrap world to screen function in box_esp::render()!");
+                    log::error!("Failed to unwrap world to screen function in name_esp::render()!");
                     egui::Pos2::new(0.0, 0.0)
                 });
 
-            // painter.rect(IMPLEMENT ME PLEASE)
+            // painter.text(IMPLEMENT ME PLEASE)
         }
 
         Ok(())

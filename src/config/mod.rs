@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
 use anyhow::{Result, Context};
-use crate::features::Feature;
+use crate::features::*;
 use super::features::visuals::*;
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -51,10 +51,4 @@ impl Config {
         log::debug!("Config loaded successfully from {}", Self::CONFIG_PATH);
         Ok(config)
     }
-}
-
-#[derive(Serialize, Deserialize, Default, Clone)]
-pub struct Features {
-    pub box_esp: box_esp::BoxEsp,
-    // Add other features here
 }

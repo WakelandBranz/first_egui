@@ -9,3 +9,15 @@ pub fn random_string(length: usize) -> String {
         .map(char::from)  // From link above, this is needed in later versions
         .collect()
 }
+
+pub fn get_varied_window_size(base_size: glam::Vec2, variation_amount: f32) -> glam::Vec2 {
+    let mut rng = rand::thread_rng();
+
+    let variation_x = rng.gen_range(-variation_amount..=variation_amount);
+    let variation_y = rng.gen_range(-variation_amount..=variation_amount);
+
+    glam::Vec2::new(
+        base_size.x + variation_x,
+        base_size.y + variation_y
+    )
+}

@@ -4,7 +4,9 @@
 pub mod visuals;
 
 use eframe::egui;
+use eframe::egui::Painter;
 use serde::{Deserialize, Serialize};
+use crate::features::visuals::Visuals;
 use super::view::world::ViewController;
 
 // Example struct. This should be modified in an actual implementation of this UI
@@ -35,6 +37,12 @@ pub struct Entity {
     view_matrix: glam::Mat4,
 }
 
+#[derive(Serialize, Deserialize, Default, Clone)]
+pub struct Features {
+    pub visuals: Visuals,
+    // Add other features here
+}
+
 // Core feature trait - just the basics
 /// Implement for each feature!
 pub trait Feature {
@@ -47,7 +55,7 @@ pub trait Feature {
     }
 
     // Used for features like ESP that DO need to be rendered.
-    fn render(&mut self, game_data: &GameData, ui: &mut egui::Ui) -> anyhow::Result<()>;
+    fn render(&self, game_data: &GameData, painter: &Painter) -> anyhow::Result<()>;
 
     // Not always necessary, but can be helpful for quick debug stuff
     fn render_debug(&mut self, game_data: &GameData, ui: &mut egui::Ui) -> anyhow::Result<()>{

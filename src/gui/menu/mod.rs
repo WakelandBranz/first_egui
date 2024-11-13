@@ -2,6 +2,7 @@ mod visuals;
 mod misc;
 mod tab_selector;
 mod menu_config;
+mod style;
 
 use std::sync::{Arc, RwLock};
 use eframe::egui::Context;
@@ -24,12 +25,16 @@ pub struct Menu {
 
 impl Menu {
     /// Called once before the first frame.
-    pub fn new(config: &mut Config, cc: &eframe::CreationContext) -> Self {
-        let config = Arc::new(RwLock::new(config.clone()));
+    pub fn new(config: Arc<RwLock<Config>>, cc: &eframe::CreationContext) -> Self {
+
+        match style::set_custom_visuals(cc) {
+            Ok(()) => log::debug!("Successfully set menu visual settings."),
+            Err(error) => log::debug!("Unsuccessfully set menu visual settings: {}", error)
+        }
 
         // Try to load the previous tab from storage
         let tab_selector = cc.storage
-            .and_then(|storage| eframe::get_value::<TabSelector>(storage, "tab_selector"))
+            .and_then(|storage| eframe::get_value(storage, "tab_selector"))
             .unwrap_or(TabSelector::default());
 
         // Try to load all previous tab data
@@ -38,11 +43,11 @@ impl Menu {
             .unwrap_or_default();
 
         let tab_misc = cc.storage
-            .and_then(|storage| eframe::get_value::<TabMisc>(storage, "tab_misc"))
+            .and_then(|storage| eframe::get_value(storage, "tab_misc"))
             .unwrap_or(TabMisc::default());
 
         let tab_menu_config = cc.storage
-            .and_then(|storage| eframe::get_value::<TabMenuConfig>(storage, "tab_menu_config"))
+            .and_then(|storage| eframe::get_value(storage, "tab_menu_config"))
             .unwrap_or(TabMenuConfig::default());
 
         // Otherwise create new state
@@ -98,15 +103,9 @@ impl eframe::App for Menu {
 
         // Save UI state
         eframe::set_value(storage, "tab_selector", &self.tab_selector);
-        log::debug!("Saved!\nTab selector: {:?}", self.tab_selector);
     }
 
     fn on_exit(&mut self, _gl: Option<&eframe::glow::Context>) {
-        // Save configuration
-        //if let Err(err) = self.config.save() {
-            //eprintln!("Failed to save config on exit: {}", err);
-        //}
-
         log::info!("Application exiting...");
 
         // Note: eframe calls save on exit
